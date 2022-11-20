@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="footer">
       <Container>
         <Row>
-          <Col className='mb-3' lg="4">
+          <Col className='mb-3' lg="3">
             <div className="logo">
               <div>
                 <h1 className="text-white">Mev</h1>
@@ -39,7 +39,7 @@ const Footer = () => {
               </ListGroup>
             </div>
           </Col>
-          <Col lg="2">
+          <Col lg="3">
             <div className="footer__quick-links">
               <h4 className="quick__links-title">Useful Links</h4>
               <ListGroup className="mb-3">
@@ -84,7 +84,7 @@ const Footer = () => {
             </div>
           </Col>
           <Col lg='12'>
-            <p className="footer__copyright">Copyright {year} developed by Kimberly Vargas. All rights reserved.</p>
+            <p className="footer__copyright">Copyright {year}. developed by Kimberly Vargas. All rights reserved.</p>
           </Col>
         </Row>
       </Container>
