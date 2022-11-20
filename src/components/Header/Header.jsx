@@ -1,10 +1,10 @@
-import React from "react";
 import "./header.css";
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const nav__links = [
   {
@@ -22,8 +22,12 @@ const nav__links = [
 ];
 
 const Header = () => {
+  const menuRef = useRef(null)
+
+  const menuToggle = () => menuRef.current.classList.toggle('active__menu')
+
   return (
-    <header className="header">
+    <header className="header sticky__header" >
       <Container>
         <Row>
           <div className="nav__wrapper">
@@ -33,7 +37,7 @@ const Header = () => {
                 <h1>Mev</h1>
               </div>
             </div>
-            <div className="navigation">
+            <div className="navigation" ref={menuRef} onClick={menuToggle}>
               <ul className="menu">
                 {nav__links.map((item, index) => (
                   <li className="nav__item" key={index}>
@@ -61,12 +65,13 @@ const Header = () => {
               <span>
                 <motion.img whileTap={{scale:1.2}} src={userIcon} alt="" />
               </span>
-            </div>
-            <div className="mobile__menu">
-              <span>
+              <div className="mobile__menu">
+              <span onClick={menuToggle}>
                 <i className="ri-menu-line"></i>
               </span>
             </div>
+            </div>
+            
           </div>
         </Row>
       </Container>
