@@ -14,6 +14,9 @@ import { Clock } from "../components/UI/Clock";
 const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
+  const [mobileProducts, setMobileProducts] = useState([]);
+  const [wireLessProducts, setWirelessProducts] = useState([]);
+  const [popularProducts, setPopularProducts] = useState([]);
   const year = new Date().getFullYear();
 
   useEffect(() => {
@@ -25,8 +28,23 @@ const Home = () => {
       (item) => item.category === "sofa"
     );
 
+    const filteredMobileProducts = products.filter(
+      (item) => item.category === "mobile"
+    );
+
+    const filteredWireLessProducts = products.filter(
+      (item) => item.category === "wireless"
+    );
+
+    const filteredPopularProducts = products.filter(
+      (item) => item.category === "watch"
+    );
+
     setTrendingProducts(filteredTrendingProducts);
     setBestSalesProducts(filteredBestSalesProducts);
+    setMobileProducts(filteredMobileProducts);
+    setWirelessProducts(filteredWireLessProducts);
+    setPopularProducts(filteredPopularProducts)
   }, []);
 
   return (
@@ -96,6 +114,27 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
+      </section>
+      <section className="new__arrivals">
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center mb-5">
+                <h2 className="section__title">New Arrivals</h2>
+            </Col>
+            <ProductsList data={mobileProducts} />
+            <ProductsList data={wireLessProducts} />
+          </Row>
+        </Container>
+      </section>
+      <section className="popular__category">
+        <Container>
+            <Row>
+              <Col lg="12" className="text-center mb-5">
+                  <h2 className="section__title">Popular in Category</h2>
+              </Col>
+              <ProductsList data={popularProducts} />
+            </Row>
+          </Container>
       </section>
     </Helmet>
   );
