@@ -5,6 +5,7 @@ import { Container, Row } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 
 const nav__links = [
   {
@@ -23,8 +24,8 @@ const nav__links = [
 
 const Header = () => {
   const menuRef = useRef(null)
-
   const menuToggle = () => menuRef.current.classList.toggle('active__menu')
+  const totalQuantity = useSelector(state => state.cart.totalQuantity)
 
   return (
     <header className="header sticky__header" >
@@ -60,7 +61,7 @@ const Header = () => {
               </span>
               <span className="cart__icon">
                 <i className="ri-shopping-bag-line"></i>
-                <span className='badge'>1</span>
+                <span className='badge'>{totalQuantity}</span>
               </span>
               <span>
                 <motion.img whileTap={{scale:1.2}} src={userIcon} alt="" />
