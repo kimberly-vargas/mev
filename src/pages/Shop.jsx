@@ -3,14 +3,16 @@ import products from '../assets/data/products'
 import { Helmet } from "../components/Helmet/Helmet";
 import { CommonSection } from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ProductsList } from '../components/UI/ProductsList'
 
 const Shop = () => {
   const [productsData, setProductsData] = useState([])
+  const sortBox = useRef('')
   const handleFilter = ({target}) => {
     const filteredProducts = products.filter(item => item.category === target.value)
     setProductsData(filteredProducts)
+    sortBox.current.value = 'default'
   }
   const handleSearch = ({target}) => {
     const searchedProducts = products.filter(item => item.productName.toLocaleLowerCase().includes(target.value))
@@ -55,8 +57,8 @@ const Shop = () => {
             </Col>
             <Col lg="3" md="6" className='filter__column text-end'>
               <div className="filter__widget">
-                <select onChange={handleSort}>
-                  <option>Sort By</option>
+                <select onChange={handleSort} ref={sortBox}>
+                  <option value='default'>Sort By</option>
                   <option value="highest price">Highest price</option>
                   <option value="lowset price">Lowset price</option>
                 </select>

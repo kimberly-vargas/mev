@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "../components/Helmet/Helmet";
 import { CommonSection } from "../components/UI/CommonSection";
 import { motion } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ProductsList } from '../components/UI/ProductsList'
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
@@ -68,19 +68,19 @@ const ProductDetails = () => {
                 <div className="product__rating d-flex align-items-center gap-5 mb-3">
                   <div>
                     <span>
-                      <i className="ri-star-fill"></i>
+                      <i className={avgRating >= 1 ? "ri-star-fill" : avgRating > 0 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className="ri-star-fill"></i>
+                      <i className={avgRating >= 2 ? "ri-star-fill" : avgRating > 1 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className="ri-star-fill"></i>
+                      <i className={avgRating >= 3 ? "ri-star-fill" : avgRating > 2 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className="ri-star-fill"></i>
+                      <i className={avgRating >= 4 ? "ri-star-fill" : avgRating > 3 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className="ri-star-half-fill"></i>
+                      <i className={avgRating === 5 ? "ri-star-fill" : avgRating > 4 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                   </div>
                   <p>

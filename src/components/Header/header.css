@@ -60,7 +60,7 @@
 .badge{
     position: absolute; 
     top: 50%;
-    right: -15%;
+    right: -25%;
     width: 15px;
     height: 15px;
     display: flex;
