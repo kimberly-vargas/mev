@@ -4,20 +4,22 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-const ProductCard = ({item}) => {
-  const dispatch = useDispatch()
+const ProductCard = ({ item }) => {
+  const dispatch = useDispatch();
   const addToCart = () => {
-    dispatch(cartActions.addItem({
-      id: item.id,
-      productName: item.productName,
-      price: item.price,
-      imgUrl: item.imgUrl
-    }))
+    dispatch(
+      cartActions.addItem({
+        id: item.id,
+        productName: item.productName,
+        price: item.price,
+        imgUrl: item.imgUrl,
+      })
+    );
 
-    toast.success('Product added successfully')
-  }
+    toast.success("Product added successfully");
+  };
 
   return (
     <Col lg="3" md="4" className="mb-2">
