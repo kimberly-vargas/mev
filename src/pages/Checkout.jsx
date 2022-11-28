@@ -3,10 +3,15 @@ import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { Helmet } from "../components/Helmet/Helmet";
 import { CommonSection } from "../components/UI/CommonSection";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const totalQty = useSelector(state => state.cart.totalQuantity)
   const totalAmount = useSelector(state => state.cart.totalAmount)
+
+  const handleOrder = () => {
+    toast.success('Your order was placed succesfully!')
+  }
 
   return (
     <Helmet title="Checkout">
@@ -58,7 +63,7 @@ const Checkout = () => {
                 <h4>
                   Total Cost: <span>${totalAmount}</span>
                 </h4>
-                <button className="buy__btn auth__btn w-100">
+                <button className="buy__btn auth__btn w-100" onClick={handleOrder}>
                   Place Order
                 </button>
               </div>

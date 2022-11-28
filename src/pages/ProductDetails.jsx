@@ -5,31 +5,30 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "../components/Helmet/Helmet";
 import { CommonSection } from "../components/UI/CommonSection";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ProductsList } from '../components/UI/ProductsList'
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 
 const ProductDetails = () => {
+  const { id } = useParams();
   const [tab, setTab] = useState("desc");
-  const [rating, setRating] = useState(0)
+  const [rating, setRating] = useState(0);
+  const [product, setProduct] = useState({
+    imgUrl:'',
+    productName: '',
+    price: 0,
+    avgRating: 0,
+    reviews: [],
+    description: '',
+    shortDesc: '',
+    category: ''
+  })
+  const [relatedProducts, setRelatedProducts] = useState([])
   const reviewUser = useRef('')
   const reviewMsg = useRef('')
   const dispatch = useDispatch()
-  const { id } = useParams();
-  const product = products.find((item) => item.id === id);
-  const {
-    imgUrl,
-    productName,
-    price,
-    avgRating,
-    reviews,
-    description,
-    shortDesc,
-    category
-  } = product;
-  const relatedProducts = products.filter(item => item.category === category)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -41,57 +40,64 @@ const ProductDetails = () => {
       rating
     }
     toast.success('Thanks for letting a review!')
+    setProduct({...product, reviews: [...product.reviews, reviewObj]})
   }
 
   const addToCart = () => {
     dispatch(cartActions.addItem({
       id,
-      image: imgUrl,
-      productName,
-      price
+      image: product.imgUrl,
+      productName: product.productName,
+      price: product.price
     }))
     toast.success('Product added successfully')
   }
 
+  useEffect(() => {
+    const product = products.find((item) => item.id === id);
+    setProduct(product)
+    const relatedProducts = products.filter(item => item.category === product.category)
+    setRelatedProducts(relatedProducts)
+  }, [])
   return (
-    <Helmet title={productName}>
-      <CommonSection title={productName} />
+    <Helmet title={product.productName}>
+      <CommonSection title={product.productName} />
       <section className="pt-0">
         <Container>
           <Row>
             <Col lg="6">
-              <img src={imgUrl} alt="" />
+              <img src={product.imgUrl} alt="" />
             </Col>
             <Col lg="6">
               <div className="product__details">
-                <h2>{productName}</h2>
+                <h2>{product.productName}</h2>
                 <div className="product__rating d-flex align-items-center gap-5 mb-3">
                   <div>
                     <span>
-                      <i className={avgRating >= 1 ? "ri-star-fill" : avgRating > 0 ? "ri-star-half-fill" : "ri-star-line"}></i>
+                      <i className={product.avgRating >= 1 ? "ri-star-fill" : product.avgRating > 0 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className={avgRating >= 2 ? "ri-star-fill" : avgRating > 1 ? "ri-star-half-fill" : "ri-star-line"}></i>
+                      <i className={product.avgRating >= 2 ? "ri-star-fill" : product.avgRating > 1 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className={avgRating >= 3 ? "ri-star-fill" : avgRating > 2 ? "ri-star-half-fill" : "ri-star-line"}></i>
+                      <i className={product.avgRating >= 3 ? "ri-star-fill" : product.avgRating > 2 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className={avgRating >= 4 ? "ri-star-fill" : avgRating > 3 ? "ri-star-half-fill" : "ri-star-line"}></i>
+                      <i className={product.avgRating >= 4 ? "ri-star-fill" : product.avgRating > 3 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                     <span>
-                      <i className={avgRating === 5 ? "ri-star-fill" : avgRating > 4 ? "ri-star-half-fill" : "ri-star-line"}></i>
+                      <i className={product.avgRating === 5 ? "ri-star-fill" : product.avgRating > 4 ? "ri-star-half-fill" : "ri-star-line"}></i>
                     </span>
                   </div>
                   <p>
-                    (<span>{avgRating}</span> ratings)
+                    (<span>{product.avgRating}</span> ratings)
                   </p>
                 </div>
                 <div className="d-flex align-items-center gap-5">
-                  <span className="product__price">${price}</span>
-                  <span>Category: {category.toUpperCase()}</span>
+                  <span className="product__price">${product.price}</span>
+                  <span>Category: {product.category.toUpperCase()}</span>
                 </div>
-                <p className="mt-3">{shortDesc}</p>
+                <p className="mt-3">{product.shortDesc}</p>
                 <motion.button whileHover={{ scale: 1.1 }} className="buy__btn" onClick={addToCart}>
                   Add to Cart
                 </motion.button>
@@ -115,20 +121,20 @@ const ProductDetails = () => {
                   className={`${tab === "rev" ? "active__tab" : ""}`}
                   onClick={() => setTab("rev")}
                 >
-                  Reviews ({reviews.length})
+                  Reviews ({product.reviews.length})
                 </h6>
               </div>
               {tab === "desc" ? (
                 <div className="tab__content mt-5">
-                  <p>{description}</p>
+                  <p>{product.description}</p>
                 </div>
               ) : (
                 <div className="product__review">
                   <div className="review__wrapper mt-5">
                     <ul>
-                      {reviews?.map((item, index) => (
+                      {product.reviews?.map((item, index) => (
                         <li key={index} className={"mb-4"}>
-                          <h6>Jonathan Mendoza</h6>
+                          <h6>{item.userName}</h6>
                           <span>{item.rating} (rating)</span>
                           <p>{item.text}</p>
                         </li>
