@@ -6,6 +6,9 @@ import { Login } from '../pages/Login'
 import { ProductDetails } from '../pages/ProductDetails'
 import { Shop } from '../pages/Shop'
 import { Signup } from '../pages/Signup'
+import { AddProducts } from '../admin/AddProducts'
+import { Allproducts } from '../admin/Allproducts'
+import { Dashboard } from '../admin/Dashboard'
 
 const Routers = () => {
   return (
@@ -18,6 +21,10 @@ const Routers = () => {
       <Route path='shop/:id' element={<ProductDetails/>}/>
       <Route path='shop' element={<Shop/>}/>
       <Route path='signup' element={<Signup/>}/>
+
+      <Route path='dashboard' element={<Dashboard/>}/>
+      <Route path='dashboard/all-products' element={<Allproducts/>}/>
+      <Route path='dashboard/add-products' element={<AddProducts/>}/>
     </Routes>
   )
 }

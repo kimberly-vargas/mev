@@ -2,7 +2,7 @@ import "./header.css";
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
@@ -24,11 +24,16 @@ const nav__links = [
 
 const Header = () => {
   const menuRef = useRef(null)
+  const profileActionsRef = useRef(null)
   const menuToggle = () => menuRef.current.classList.toggle('active__menu')
   const totalQuantity = useSelector(state => state.cart.totalQuantity)
   const navigate = useNavigate()
   const navigateToCart = () => {
     navigate('/cart')
+  }
+  const toggleProfileActions = () => {
+    console.log('click')
+    profileActionsRef.current.classList.toggle('show__profileActions')
   }
 
   return (
@@ -63,9 +68,14 @@ const Header = () => {
                 <i className="ri-shopping-cart-2-line"></i>
                 <span className='badge'>{totalQuantity}</span>
               </span>
-              <span>
-                <motion.img whileTap={{scale:1.2}} src={userIcon} alt="" />
-              </span>
+              <div className="profile">
+                <motion.img whileTap={{scale:1.2}} src={userIcon} alt="" onClick={toggleProfileActions}/>
+                <div className="profile__actions" ref={profileActionsRef} onClick={toggleProfileActions}>
+                  <div className="d-flex align-items-center justify-content-center flex-column">
+                    <Link to='/dashboard'>Dashboard</Link>
+                  </div>
+                </div>
+              </div>
               <div className="mobile__menu">
               <span onClick={menuToggle}>
                 <i className="ri-menu-line"></i>
