@@ -1,5 +1,5 @@
 import { Container, Row } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/adminNav.css";
 import userIcon from "../assets/images/user-icon.png";
 
@@ -9,7 +9,7 @@ const admin__nav = [
     path: "/dashboard",
   },
   {
-    display: "All products",
+    display: "Products",
     path: "/dashboard/all-products",
   },
   {
@@ -23,6 +23,7 @@ const admin__nav = [
 ];
 
 const AdminNav = () => {
+  const navigate = useNavigate()
   return (
     <>
       <header className="admin__header">
@@ -30,7 +31,7 @@ const AdminNav = () => {
           <Container>
             <div className="admin__nav-wrapper-top">
               <div className="logo">
-                <h2>Mev</h2>
+                <h2 style={{cursor: "pointer"}} onClick={() => navigate('/')}>Mev</h2>
               </div>
               <div className="search__box">
                 <input type="text" placeholder="Search..." />

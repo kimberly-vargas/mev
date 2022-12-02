@@ -1,0 +1,8 @@
+.orders__billing-list li{
+    display: flex;
+    gap: 10px;
+}
+
+.orders__billing-list li div{
+    font-weight: 500;
+}

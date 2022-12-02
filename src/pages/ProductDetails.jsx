@@ -1,4 +1,3 @@
-import products from "../assets/data/products";
 import "../styles/productDetails.css";
 import { Container, Row, Col } from "reactstrap";
 import { useParams } from "react-router-dom";
@@ -10,9 +9,13 @@ import { ProductsList } from '../components/UI/ProductsList'
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
+import { db } from "../firebase.config"; 
+import { doc, getDoc } from 'firebase/firestore'
+import { useGetData } from "../custom-hooks/useGetData";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const {data: products} = useGetData('products')
   const [tab, setTab] = useState("desc");
   const [rating, setRating] = useState(0);
   const [product, setProduct] = useState({
@@ -25,7 +28,7 @@ const ProductDetails = () => {
     shortDesc: '',
     category: ''
   })
-  const [relatedProducts, setRelatedProducts] = useState([])
+  const relatedProducts = products.filter(item => item.category === product.category)
   const reviewUser = useRef('')
   const reviewMsg = useRef('')
   const dispatch = useDispatch()
@@ -54,10 +57,17 @@ const ProductDetails = () => {
   }
 
   useEffect(() => {
-    const product = products.find((item) => item.id === id);
-    setProduct(product)
-    const relatedProducts = products.filter(item => item.category === product.category)
-    setRelatedProducts(relatedProducts)
+    const docRef = doc(db, 'products', id)
+    const getProduct = async() => {
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap.exists()){
+        setProduct(docSnap.data())
+      } else {
+        toast.error('no product!')
+      }
+    }
+    getProduct()
   }, [])
   return (
     <Helmet title={product.productName}>

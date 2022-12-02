@@ -2,6 +2,19 @@
     border: 1px solid var(--card-bg-02)
 }
 
+.payment__method{
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid var(--card-bg-02);
+    padding: 12px 0px 12px 20px;
+    cursor: pointer;
+}
+
+.payment__method div img{
+    width: 32px;
+}
+
 .checkout__cart{
     padding: 20px;
     background: var(--primary-color);

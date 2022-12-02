@@ -9,6 +9,9 @@ import { Signup } from '../pages/Signup'
 import { AddProducts } from '../admin/AddProducts'
 import { Allproducts } from '../admin/Allproducts'
 import { Dashboard } from '../admin/Dashboard'
+import { Orders } from '../admin/Orders'
+import { BannerConfig } from '../admin/BannerConfig'
+import { Payment } from '../pages/Payment'
 
 const Routers = () => {
   return (
@@ -17,6 +20,7 @@ const Routers = () => {
       <Route path='home' element={<Home/>}/>
       <Route path='cart' element={<Cart/>}/>
       <Route path='checkout' element={<Checkout/>}/>
+      <Route path='payment/:id' element={<Payment/>}/>
       <Route path='login' element={<Login/>}/>
       <Route path='shop/:id' element={<ProductDetails/>}/>
       <Route path='shop' element={<Shop/>}/>
@@ -25,6 +29,8 @@ const Routers = () => {
       <Route path='dashboard' element={<Dashboard/>}/>
       <Route path='dashboard/all-products' element={<Allproducts/>}/>
       <Route path='dashboard/add-products' element={<AddProducts/>}/>
+      <Route path='dashboard/orders' element={<Orders/>}/>
+      <Route path='dashboard/banner' element={<BannerConfig/>}/>
     </Routes>
   )
 }

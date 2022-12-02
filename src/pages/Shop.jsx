@@ -1,25 +1,31 @@
 import '../styles/shop.css'
-import products from '../assets/data/products'
 import { Helmet } from "../components/Helmet/Helmet";
 import { CommonSection } from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import { useEffect, useState, useRef } from 'react';
 import { ProductsList } from '../components/UI/ProductsList'
+import { useGetData } from "../custom-hooks/useGetData";
 
 const Shop = () => {
+  const {data: products} = useGetData('products')
   const [productsData, setProductsData] = useState([])
   const sortBox = useRef('')
+  
   const handleFilter = ({target}) => {
-    const filteredProducts = products.filter(item => item.category === target.value)
-    setProductsData(filteredProducts)
+    if (target.value === 'all'){
+      setProductsData(products)
+    } else {
+      const filteredProducts = products.filter(item => item.category === target.value)
+      setProductsData(filteredProducts)
+    }
     sortBox.current.value = 'default'
   }
+  
   const handleSearch = ({target}) => {
     const searchedProducts = products.filter(item => item.productName.toLocaleLowerCase().includes(target.value))
     setProductsData(searchedProducts)
   }
   const handleSort = ({target}) => {
-    console.log(target.value)
     if (target.value === 'lowset price'){
       const sortedProducts = [...productsData].sort((a, b) => {
         return Number(a.price) - Number(b.price)
@@ -35,7 +41,8 @@ const Shop = () => {
 
   useEffect(() => {
     setProductsData(products)
-  }, [])
+  }, [products])
+
   
   return (
     <Helmet title="Shop">
@@ -46,7 +53,8 @@ const Shop = () => {
             <Col lg="3" md="6" className='filter__column'>
               <div className="filter__widget">
                 <select onChange={handleFilter}>
-                  <option>Filter By Category</option>
+                  <option>Category</option>
+                  <option value="all">All</option>
                   <option value="sofa">Sofa</option>
                   <option value="mobile">Mobile</option>
                   <option value="chair">Chair</option>

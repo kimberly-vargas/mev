@@ -128,19 +128,9 @@
     background: #fff;
 }
 
-/* @media only screen and (max-width: 1240px){
-    .nav__icons .profile .profile__actions{
-        left: -1.7rem;
-        padding: 10px;
-    }
+.profile__actions div a {
+    color: var(--primary-color);
 }
-
-@media only screen and (max-width: 819px){
-    .nav__icons .profile .profile__actions{
-        left: -2rem;
-        padding: 10px;
-    }
-} */
 
 @media only screen and (max-width: 768px){
     .navigation{

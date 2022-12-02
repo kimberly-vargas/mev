@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react'
+import { useGetData } from '../../custom-hooks/useGetData'
 import '../../styles/clock.css'
 
 const Clock = () => {
+    const {data: banner} = useGetData('banner')
     const [days, setDays] = useState()
     const [hours, setHours] = useState()
     const [minutes, setMinutes] = useState()
@@ -10,7 +12,7 @@ const Clock = () => {
     let interval
 
     const countDown = () => {
-        const destination = new Date('Dec 30, 2022').getTime()
+        const destination = new Date(banner[0]?.expirationDate).getTime()
         interval = setInterval(() => {
             const now = new Date().getTime()
             const different = destination - now
@@ -30,8 +32,8 @@ const Clock = () => {
     }
 
     useEffect(() => {
-        countDown()
-    }, [])
+        banner[0] && countDown()
+    }, [banner])
 
   return (
     <div className="clock__wrapper d-flex align-items-center gap-3">

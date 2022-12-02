@@ -36,8 +36,9 @@ const AddProducts = () => {
         `productImages/${Date.now() + product.imgUrl.name}`
       );
       const uploadTask = uploadBytesResumable(storageRef, product.imgUrl);
-      uploadTask.on(
-        () => {
+      uploadTask.on("state_changed",
+        (snapshot) => {},
+        (error) => {
           toast.error("Image not uploaded");
         },
         () => {

@@ -32,7 +32,6 @@ const Header = () => {
     navigate('/cart')
   }
   const toggleProfileActions = () => {
-    console.log('click')
     profileActionsRef.current.classList.toggle('show__profileActions')
   }
 
